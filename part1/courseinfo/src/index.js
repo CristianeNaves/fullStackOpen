@@ -3,58 +3,72 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import { useState } from 'react';
 
-const History = (props) => {
-  if (props.allClicks.length === 0){
-    return (
-      <div>
-        The app is used by pressing the buttons
-      </div>
-    )
-  }
-  
+const Header = ({course}) => {
   return (
     <div>
-      button press history: {props.allClicks.join(' ')}
+      <h1>{course}</h1>
     </div>
-  )
-};
+  );  
+}
 
-const Button = ({ onClick, text }) => {
+const Part = ({ name, exercises }) => {
   return (
     <div>
-      <button onClick={onClick}>
-        {text}
-      </button>
-    </div>
-  )
-};
-
-const App = (props) => {
-
-  const [left, setLeft] = useState(0);
-  const [right, setRight] = useState(0);
-  const [allClicks, setAll] = useState([]);
-
-  const handleLeftClick = () => {
-    setAll(allClicks.concat('L'));
-    setLeft(left + 1);
-  };
-
-  const handleRightClick = () => {
-    setAll(allClicks.concat('R'));
-    setRight(right + 1);
-  };
-
-  return (
-    <div>
-      {left}
-      <Button onClick={handleLeftClick} text="Left"/>
-      <Button onClick={handleRightClick} text="Right"/>
-      {right}
-      <History allClicks={allClicks}/>
+      <p>
+        {name} {exercises}
+      </p>
     </div>
   );
+}
+
+const Content = ({parts}) => {
+  return (
+    <div>
+      <Part name={parts[0].name} exercises={parts[0].exercises}/>
+      <Part name={parts[1].name} exercises={parts[1].exercises}/>
+      <Part name={parts[2].name} exercises={parts[2].exercises}/>
+    </div>
+  )
 };
+
+const Total = ({parts}) => {
+  return (
+    <div>
+      <p>
+        Number of exercises {parts[0].exercises + parts[1].exercises + parts[2].exercises}
+      </p>
+    </div>
+  )
+};
+
+const App = () => {
+  const course = {
+    name: 'Half Stack application development',
+    parts: [
+      {
+        name: "Fundamentals of React",
+        exercises: 10
+      },
+      {
+        name: "Using props to pass data",
+        exercises: 7
+      },
+      {
+        name: "State of a component",
+        exercises: 14
+      }
+    ]
+  }
+
+  return (
+    <div>
+      <Header course={course.name} />
+      <Content parts={course.parts}/>
+      <Total parts={course.parts}/>
+    </div>
+  )
+}
+
 
 ReactDOM.render(
   <React.StrictMode>
