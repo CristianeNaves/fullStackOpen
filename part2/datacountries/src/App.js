@@ -1,30 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 
-const Weather = ({local}) => {
-  const [temperature, setTemperature] = useState('')
-
-  useEffect(() => {
-    axios.get('http://api.weatherstack.com/current',{
-      params: {
-        access_key: `${process.env.REACT_APP_API_KEY}`,
-        query: `${local}`
-      }
-    }).then(response => {
-      console.log(response.data.current)
-      setTemperature(response.data.temperature)
-    })
-  })
-
-  
-  return (
-    <div>
-      <h2>Weather in {local}</h2>
-      <p><b>temperature:</b> {temperature} Celcius</p>
-    </div>
-  )
-}
-
 const ReducedCountry = ({country}) => {
   const [showInfo, setShowInfo] = useState(false)
 
@@ -50,7 +26,6 @@ const Country = ({country}) => {
         {country.languages.map((l,i) => <li key={i}>{l.name}</li>)}
       </ul>
       <img src={country.flag} alt={`${country.name} flag`}/>
-      <Weather local={country.capital}/>
     </div>
   )
 }
