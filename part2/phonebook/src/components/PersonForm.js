@@ -8,28 +8,32 @@ const PersonForm = ({persons, setPersons}) => {
   const savePerson = (event) => {
     event.preventDefault();
 
-    if (!containsName()){
-      const person = {
-        name: newName,
-        number: newNumber
-      }
+    const person = {
+      name: newName,
+      number: newNumber
+    }
 
+    const existing_person = getPerson()
+
+    if (existing_person) {
+      let update = window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`);
+      if (update) {
+        personService.update(existing_person.id, person).then(returnedPerson => {
+          setPersons(persons.map(person => person.id !== returnedPerson.id? person : returnedPerson))
+        })
+      }
+    } 
+    else {
       personService.create(person).then(returnedPerson => {
         setPersons(persons.concat(returnedPerson))
-        setNewName('')
-        setNewNumber('')
       })
-      
-    } else {
-      alert(`${newName} is already added to phonebook`);
     }
-    
+    setNewName('')
+    setNewNumber('')
   }
 
-  const containsName = () => {
-    const names = persons.map(person => person.name);
-  
-    return names.includes(newName)
+  const getPerson = () => {
+    return persons.find(person => person.name === newName);
   }
 
   return (
