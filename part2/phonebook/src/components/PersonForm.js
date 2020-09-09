@@ -21,9 +21,11 @@ const PersonForm = ({persons, setPersons, setMessage}) => {
         personService.update(existing_person.id, person).then(returnedPerson => {
           setPersons(persons.map(person => person.id !== returnedPerson.id? person : returnedPerson))
           
-          setMessage(`Number changed to ${returnedPerson.number}`)
+          setMessage({text: `Number changed to ${returnedPerson.number}`, success: true})
 
           setTimeout(() => setMessage(null), 5000)
+        }).catch(error => {
+          setMessage({text: `Information of ${existing_person.name} has already been removed from server`, success: false})
         })
       }
     } 
@@ -31,7 +33,7 @@ const PersonForm = ({persons, setPersons, setMessage}) => {
       personService.create(person).then(returnedPerson => {
         setPersons(persons.concat(returnedPerson))
 
-        setMessage(`Added ${returnedPerson.name}`)
+        setMessage({text: `Added ${returnedPerson.name}`, success: true})
 
         setTimeout(() => setMessage(null), 5000)
 

@@ -22,9 +22,10 @@ const App = () => {
       <div>
       filter shown with <input value={filterName} onChange={(event) => setFilterName(event.target.value)}/>
       </div>
+      <h2>add a new</h2>
       <PersonForm persons={persons} setPersons={setPersons} setMessage={setNotificationMessage}/>
       <h2>Numbers</h2>
-      <Persons filterName={filterName} persons={persons} setPersons={setPersons}/> 
+      <Persons filterName={filterName} persons={persons} setPersons={setPersons} /> 
     </div>
   )
 }
