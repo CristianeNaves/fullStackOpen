@@ -26,6 +26,7 @@ const PersonForm = ({persons, setPersons, setMessage}) => {
           setTimeout(() => setMessage(null), 5000)
         }).catch(error => {
           setMessage({text: `Information of ${existing_person.name} has already been removed from server`, success: false})
+          setTimeout(() => setMessage(null), 5000)
         })
       }
     } 
