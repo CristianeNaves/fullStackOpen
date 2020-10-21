@@ -10,7 +10,7 @@ const App = () => {
   const [ notificationMessage, setNotificationMessage] = useState(null)
 
   useEffect(() => {
-    personService.getAll('http://localhost:3001/persons').then(returnedPersons =>{
+    personService.getAll().then(returnedPersons =>{
       setPersons(returnedPersons)
     })
   }, []);
