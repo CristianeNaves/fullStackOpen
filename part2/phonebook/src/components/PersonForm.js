@@ -33,11 +33,12 @@ const PersonForm = ({persons, setPersons, setMessage}) => {
     else {
       personService.create(person).then(returnedPerson => {
         setPersons(persons.concat(returnedPerson))
-
         setMessage({text: `Added ${returnedPerson.name}`, success: true})
-
         setTimeout(() => setMessage(null), 5000)
-
+      })
+      .catch(error => {
+          setMessage({text: `${error.response.data.error}`, success: false})
+          setTimeout(() => setMessage(null), 5000)
       })
     }
     setNewName('')
